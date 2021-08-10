@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>My first three.js app</title>
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+
+</head>
+
+<body>
+    <script src="js/three.js"></script>
+    <script>
+        // Our Javascript will go here.
+        // To actually be able to display anything with three.js we need three things:
+        //  scene, camera and renderer, so that we can render the scene with camera.
+        const scene = new THREE.Scene();
+
+        //The first attribute is the field of view. FOV is the extent of the scene that is seen on the display at any given moment. The value is in degrees.
+        // Aspect ratio is usually w/h. Wide angle aspect ratio I suppose.
+        const camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        //Renderer, "where the magic happens."
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        // setSize(window.innerWidth/2, window.innerHeight/2, false)
+
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshBasicMaterial({
+            color: 0x00ff00
+        });
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+        camera.position.z = 5;
+
+        //Render or animate loop
+        const animate = () => {
+            requestAnimationFrame(animate);
+            cube.rotation.x += 0.02;
+            cube.rotation.y += 0.02;
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        document.body.appendChild(renderer.domElement);
+    </script>
+</body>
+
+</html>
